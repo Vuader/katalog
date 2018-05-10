@@ -1,17 +1,7 @@
-=========================
-Tachyonic Project Katalog
-=========================
-
-Quick links
------------
-
-* `Website <http://www.tachyonic.org/>`__.
-* `Documentation <http://www.tachyonic.org/sphinx/katalog>`__.
-
 Installation
-------------
+============
 
-Tachyonic Project Katalog currently fully supports `CPython <https://www.python.org/downloads/>`__ 3.6.
+Tachyonic Project katalog currently fully supports `CPython <https://www.python.org/downloads/>`__ 3.6.
 
 
 CPython
@@ -40,7 +30,7 @@ the cythonized katalog framework with the system's default C compiler.
 Source Code
 -----------
 
-Tachyonic Project Katalog infrastructure and code is hosted on `GitHub <https://github.com/TachyonicProject/katalog>`_.
+Tachyonic Project katalog infrastructure and code is hosted on `GitHub <https://github.com/TachyonicProject/katalog>`_.
 Making the code easy to browse, download, fork, etc. Pull requests are always
 welcome!
 
