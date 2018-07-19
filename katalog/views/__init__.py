@@ -1,0 +1,1 @@
+import katalog.views.objects
