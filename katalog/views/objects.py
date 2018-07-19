@@ -29,6 +29,7 @@
 # THE POSSIBILITY OF SUCH DAMAGE.
 from luxon import register
 from luxon import router
+from luxon import db
 
 from katalog.models.index import katalog_file
 
@@ -38,18 +39,45 @@ class Objects(object):
         router.add('GET', 'regex:^.*$', self.get,
                    tag='services')
 
-        router.add('POST', 'regex:^.*$', self.post,
+        router.add('POST', 'regex:^.*$', self.upload,
+                   tag='services')
+
+        router.add([ 'PUT', 'PATCH' ], 'regex:^.*$', self.update,
+                   tag='services')
+
+        router.add('DELETE', 'regex:^.*$', self.delete,
                    tag='services')
 
     def get(self, req, resp):
-        pass
+        model = katalog_file()
+        model.sql_id(req.route)
+        resp.set_header('Content-Type', model['mime_type'])
+        return model['content']
 
-    def post(self, req, resp):
-        # mimetype = req.content_type
+    def upload(self, req, resp):
         model = katalog_file()
         model['path'] = req.route
         model['content'] = req.read()
-        model['mime_type'] = "text/plain; charset=utf-8"
+
+        if req.content_type is None:
+            model['mime_type'] = "text/plain; charset=utf-8"
+        else:
+            model['mime_type'] = req.content_type
+
         model.commit()
-        return model
+
+    def update(self, req, resp):
+        model = katalog_file()
+        model.sql_id(req.route)
+        model['content'] = req.read()
+
+        if req.content_type is not None:
+            model['mime_type'] = req.content_type
+
+        model.commit()
+
+    def delete(self, req, resp):
+        with db() as conn:
+            conn.execute('DELETE FROM katalog_file WHERE path = %s', req.route)
+            conn.commit()
 

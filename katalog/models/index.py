@@ -31,15 +31,11 @@ from uuid import uuid4
 
 from luxon import register
 from luxon import SQLModel
-from luxon.utils.timezone import now
 
 
 @register.model()
 class katalog_file(SQLModel):
-    id = SQLModel.Uuid(default=uuid4, internal=True)
     path = SQLModel.String(null=False)
     content = SQLModel.LongBlob(null=False)
     mime_type = SQLModel.String(default="application/octet-stream")
-    creation_time = SQLModel.DateTime(default=now, readonly=True)
-    primary_key = id
-    unique_path = SQLModel.UniqueIndex(path)
+    primary_key = path
